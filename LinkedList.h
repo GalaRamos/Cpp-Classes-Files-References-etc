@@ -3,116 +3,114 @@
 
 using namespace std;
 
-class LinkedList
-{
-private:
-    Node* pHead;
+class LinkedList {
+  public:
+      Node* pHead;
 
-public:
-    LinkedList() {
-      pHead = NULL;
-    }
+  public:
+      LinkedList() {
+        pHead = NULL;
+      }
 
-    bool EmptyList () {
-      return (pHead == NULL);
-    }
+      bool EmptyList () {
+        return (pHead == NULL);
+      }
 
-    Node getHead() {
-      return pHead -> iInfo;
-    }
+      Node getHead() {
+        return *pHead;
+      }
 
-    void setHead(int iData) {
-      pHead = new Node(iData);
-    }
+      void setHead(int iData) {
+        pHead = new Node(iData);
+      }
 
-    void AddStart (int iData) {
-      Node*pNew = new Node (iData, pHead);
-      pHead = pNew;
-    }
+      void AddStart (int iData) {
+        Node*pNew = new Node (iData, pHead);
+        pHead = pNew;
+      }
 
-    void AddLAst(int iData) {
-      if (EmptyList())
-        setHead(iData);
-      else {
+      void AddLast(int iData) {
+        if (EmptyList())
+          setHead(iData);
+        else {
+          Node*pN = pHead;
+          while (pN != NULL) {
+            pN = pN -> next;
+          }
+          pN -> next = new Node(iData);
+        }
+      }
+
+      int countNodes() {
+        int icount = 0;
         Node*pN = pHead;
         while (pN != NULL) {
+          icount++;
           pN = pN -> next;
         }
-        pN -> next = new Node(iData);
+        return icount;
       }
-    }
 
-    int countNodes() {
-      int icount = 0;
-      Node*pN = pHead;
-      while (pN != NULL) {
-        icount++;
-        pN = pN -> next;
+      ~LinkedList() {
+        while (pHead != NULL) {
+          Node*pN = pHead;
+          pHead = pHead -> next;
+          delete pN;
+        }
       }
-      return icount;
-    }
 
-    ~LinkedList() {
-      while (pHead != NULL) {
+      bool LinkedListfind(int iData) {
+        Node*pN = pHead;
+        while (pN != NULL && pN -> iInfo != iData) {
+          pN = pN -> next;
+        }
+        return pN != NULL;
+      }
+
+      void DeleteFirst() {
         Node*pN = pHead;
         pHead = pHead -> next;
         delete pN;
       }
-    }
 
-    bool LinkedListfind(int iData) {
-      Node*pN = pHead;
-      while (pN != NULL && pN -> iInfo != iData) {
-        pN = pN -> next;
-      }
-      return pN != NULL;
-    }
-
-    void DeleteFirst() {
-      Node*pN = pHead;
-      pHead = pHead -> next;
-      delete pN;
-    }
-
-    void DeleteLast() {
-      Node*pBefore = NULL;
-      Node*pActual = NULL;
-      while (pActual -> next != NULL) {
-        pBefore = pActual;
-        pActual = pActual -> next;
-      }
-      if (pBefore == NULL) {
-        pHead = NULL;
-      }
-      else {
-        pBefore -> next = NULL;
-      }
-      delete pActual;
-    }
-
-    void Deleteinfo(int iData) {
-      Node*pBefore = NULL;
-      Node*pActual = NULL;
-      while (pActual != NULL && pActual -> iInfo != iData) {
-        pBefore = pActual;
-        pActual = pActual -> next;
-      }
-      if (pActual != NULL) {
+      void DeleteLast() {
+        Node*pBefore = NULL;
+        Node*pActual = NULL;
+        while (pActual -> next != NULL) {
+          pBefore = pActual;
+          pActual = pActual -> next;
+        }
         if (pBefore == NULL) {
-          pHead = pHead -> next;
-        } else {
-          pBefore -> next = pActual -> next;
+          pHead = NULL;
+        }
+        else {
+          pBefore -> next = NULL;
         }
         delete pActual;
       }
-    }
 
-    void print() {
-      Node*pN = pHead;
-      while (pN != NULL){
-        cout << pN -> iInfo;
-        pN = pN -> next;
-      } cout << endl;
-    }
+      void Deleteinfo(int iData) {
+        Node*pBefore = NULL;
+        Node*pActual = NULL;
+        while (pActual != NULL && pActual -> iInfo != iData) {
+          pBefore = pActual;
+          pActual = pActual -> next;
+        }
+        if (pActual != NULL) {
+          if (pBefore == NULL) {
+            pHead = pHead -> next;
+          } else {
+            pBefore -> next = pActual -> next;
+          }
+          delete pActual;
+        }
+      }
 
+      void printLinkedList() {
+        Node*pN = pHead;
+        while (pN != NULL){
+          cout << pN -> iInfo << " ";
+          pN = pN -> next;
+        } cout << endl;
+      }
 };

@@ -1,7 +1,6 @@
 #include <iostream>
 
-class Node
-{
+class Node {
   public:
     Node*next;
     int iInfo;
