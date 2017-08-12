@@ -75,7 +75,7 @@ class LinkedList {
 
       void DeleteLast() {
         Node*pBefore = NULL;
-        Node*pActual = NULL;
+        Node*pActual = pHead;
         while (pActual -> next != NULL) {
           pBefore = pActual;
           pActual = pActual -> next;
@@ -91,7 +91,7 @@ class LinkedList {
 
       void Deleteinfo(int iData) {
         Node*pBefore = NULL;
-        Node*pActual = NULL;
+        Node*pActual = pHead;
         while (pActual != NULL && pActual -> iInfo != iData) {
           pBefore = pActual;
           pActual = pActual -> next;
