@@ -1,6 +1,7 @@
 #include<iostream>
 #include <queue>
 
+
 using namespace std;
 
 class TreeNode {
@@ -58,6 +59,7 @@ class BST {
          int nodeCount = q.size();
          if (nodeCount == 0)
           break;
+
          // Dequeue all nodes of current level and Enqueue all nodes of next level
          while (nodeCount > 0)
          {
@@ -73,7 +75,6 @@ class BST {
          cout << endl;
        }
     }
-
     /* Process to insert node:
         The new value doesnt exist, the new node will be a leaf node.
        Procedure:
@@ -181,19 +182,23 @@ int main () {
   myBST.add(2);
   myBST.add(1);
   myBST.add(6);
+
   cout << "Print tree inorder as list: ";
   myBST.inorder();
   cout << endl;
+
   if (myBST.searchnode(3))
     cout << "Node with value 3 found" << endl;
+
   myBST.PrintTreebyLevels();
   cout << endl;
-    /*
-  myBST.deleteelem(3);
+
+  myBST.deleteelem(5);
   cout << "Print tree inorder as list: ";
   myBST.inorder();
   cout << endl;
-*/
+  myBST.PrintTreebyLevels();
+  cout << endl;
 
   return 0;
 }
