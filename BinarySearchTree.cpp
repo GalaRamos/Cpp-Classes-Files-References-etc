@@ -1,19 +1,20 @@
 #include<iostream>
+#include <queue>
 
 using namespace std;
 
 class TreeNode {
   public:
-    int info;
+    int iInfo;
     TreeNode *left, *right;
     TreeNode() {
       left = right = NULL;
     }
-    TreeNode(int iData); {
+    TreeNode(int iData) {
       iInfo = iData;
       left = right = NULL;
     }
-}
+};
 
 class BST {
   private:
@@ -22,29 +23,57 @@ class BST {
     BST() {
       root = NULL;
     }
-    ~BST(){}
+    ~BST() {}
     bool searchnode (int iValue) {
       TreeNode *pP = root;
       while (pP != NULL) {
         if (pP ->  iInfo == iValue)
-          return true
+          return true;
         else
           pP = (pP -> iInfo > iValue ? pP -> left: pP -> right);
       }
       return false;
     }
-    inorder() {
+    void inorder() {
       displayinorder(root);
     }
-    displayinorder(TreeNode * pR) {
+    void displayinorder(TreeNode *pR) {
       if (pR != NULL) {
         displayinorder (pR -> left);
         cout << pR -> iInfo;
         displayinorder (pR -> right);
       }
-
-
     }
+    void PrintTreebyLevels() {
+      BreadthFirstTravseral(root);
+    }
+    void BreadthFirstTravseral(TreeNode *pR) {
+      if (root == NULL)
+          return;
+      queue<TreeNode*> q;
+      q.push(root);
+      while (!q.empty())
+       {
+         // nodeCount (queue size) indicates number of nodes at current level.
+         int nodeCount = q.size();
+         if (nodeCount == 0)
+          break;
+         // Dequeue all nodes of current level and Enqueue all nodes of next level
+         while (nodeCount > 0)
+         {
+           TreeNode *node = q.front();
+           cout << node->iInfo << " ";
+           q.pop();
+           if (node->left != NULL)
+               q.push(node->left);
+           if (node->right != NULL)
+               q.push(node->right);
+           nodeCount--;
+         }
+         cout << endl;
+       }
+    }
+
     /* Process to insert node:
         The new value doesnt exist, the new node will be a leaf node.
        Procedure:
@@ -56,7 +85,7 @@ class BST {
       pParent = NULL;
       while (pChild != NULL && pChild -> iInfo != iValue){
         pParent = pChild;
-        pChild = (pChild -> iInfo > iValue? pChild -> left : pChild -> right)
+        pChild = (pChild -> iInfo > iValue? pChild -> left : pChild -> right);
       }
       return pParent;
     }
@@ -89,13 +118,15 @@ class BST {
        Procedure:
         Search for the parent node, add node.
     */
-    TreeNode *predecesor(TreeNode *pActual) { // pActual points to the node to errase
+    // pActual points to the node to errase
+    TreeNode *predecesor(TreeNode *pActual)  {
       TreeNode *pP = pActual -> left;
       while (pP -> right != NULL)
         pP = pP -> right;
       return pP;
     }
-    TreeNode *successor(TreeNode *pActual) { // pActual points to the node to errase
+    // pActual points to the node to errase
+    TreeNode *successor(TreeNode *pActual) {
       TreeNode *pP = pActual -> left;
       while (pP -> left != NULL)
         pP = pP -> left;
@@ -107,7 +138,7 @@ class BST {
       if (pParent == NULL)
         pDelete = root;
       else
-        pDelete = (pParent -> iInfo > iValue ? pParent -> left : pParent -> right)
+        pDelete = (pParent -> iInfo > iValue ? pParent -> left : pParent -> right);
 
       // find substitute when the node to delete has 2 childs
       if (pDelete -> left != NULL && pDelete -> right != NULL) {
@@ -125,17 +156,44 @@ class BST {
       }
       // Delete node with 0 or 1 child
       else if (pParent -> iInfo > iValue) {
-        if (pDelete -> left == NULL)
-          pParent -> left = pDelete -> right;
-        else
+        if (pDelete -> left == NULL){
+            pParent -> left = pDelete -> right;
+        }
+        else if (pDelete -> left != NULL) {
           pParent -> left = pDelete -> left;
-
-        else if (pDelete -> right == NULL)
+        }
+        else if (pDelete -> right == NULL) {
           pParent -> right = pDelete -> left;
-        else
+        }
+        else if (pDelete -> right != NULL) {
           pParent -> right = pDelete -> right;
+        }
       }
-
-
     }
+
+};
+
+int main () {
+  BST myBST;
+  myBST.add(3);
+  myBST.add(5);
+  myBST.add(4);
+  myBST.add(2);
+  myBST.add(1);
+  myBST.add(6);
+  cout << "Print tree inorder as list: ";
+  myBST.inorder();
+  cout << endl;
+  if (myBST.searchnode(3))
+    cout << "Node with value 3 found" << endl;
+  myBST.PrintTreebyLevels();
+  cout << endl;
+    /*
+  myBST.deleteelem(3);
+  cout << "Print tree inorder as list: ";
+  myBST.inorder();
+  cout << endl;
+*/
+
+  return 0;
 }
