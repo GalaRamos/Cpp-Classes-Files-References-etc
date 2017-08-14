@@ -1,6 +1,6 @@
 #include<iostream>
 #include <queue>
-
+#include<list>
 
 using namespace std;
 
@@ -173,6 +173,158 @@ class BST {
     }
 
 };
+
+TreeNode insert(TreeNode *root,  TreeNode *node){
+  if (root == NULL)
+    return node;
+  if (node -> iInfo <= root -> iInfo)
+    root -> left = insert(root -> left, node);
+  if (node -> iInfo > root -> iInfo)
+    root -> right = insert(root -> right, node);
+  return root;
+} // logn
+
+void findNode(TreeNode *root, int iValue) {
+  if (root == NULL)
+    return NULL;
+  if (root -> iInfo == iValue)
+    return root;
+  if (iValue < root -> iInfo)
+    findNode(root -> left, iValue);
+  else
+    findNode(root -> right, iValue)
+} //logn
+
+void mirrorBST (TreeNode *root) {
+  if (root == NULL)
+    return;
+  mirrorBST(root -> left);
+  mirrorBST(root -> right);
+  TreeNode *temp = root -> left;
+  root -> left = root -> right;
+  root -> right = temp;
+}
+
+int maxDepth(TreeNode *root) {
+  if (root == NULL)
+    return 0;
+  if (root -> left == NULL && root ->right == NULL) // If leaf node
+    return 0;
+  int leftMax = 1 + maxDepth(root -> left);
+  int rightMax = 1 + maxDepth(root -> right);
+  return max(leftMax, rightMax);
+}
+
+int UniqueTrees(int NumberNodes) {
+  if (NumberNodes <= 1)
+    return 1;
+  for (int i = 1; i < NumberNodes; i++) {
+    int countLeftTrees = UniqueTrees(i - 1);
+    int countRightTree = UniqueTrees(NumberNodes - 1);
+    sum = sum + (countRightTree * countLeftTrees);
+  }
+  return sum;
+}
+
+void printRannge(TreeNode * Node, int low, int high) {
+  if (root == NULL)
+    return;
+  if (low <= root -> iInfo) {
+    printRannge(root -> left, low, high);
+  }
+  if (low <= root -> iInfo && root -> iInfo <= high) {
+    cout << root -> iInfo << " ";
+  }
+  if (high > root -> iInfo){
+    printRannge(root -> right, low, high);
+  }
+}
+
+bool checkIfBST(TreeNode *root, int min, int max) {
+  if (root == NULL)
+    return true;
+  if (root -> iInfo <= min || root -> iInfo > max)
+    return false;
+  return (checkIfBST(root -> left, min, root -> iInfo) &&
+    checkIfBST(root ->> right, root -> iInfo, max));
+}
+
+bool hasPathSum(TreeNode *root, int sum) {
+  if (root -> left == NULL && root -> right == NULL)
+    return (summ == root -> iInfo)
+  int subsum = sum - root -> iInfo;
+  if (root -> left != NULL) {
+    bool hasPathSum = hasPathSum(root -> left, subsum);
+    if (hasPathSum)
+      return true;
+  }
+  if (root -> right != NULL) {
+    bool hasPathSum = hasPathSum(root -> right, subsum);
+    if (hasPathSum)
+      return true;
+  }
+  return false;
+
+
+
+
+
+
+
+}
+
+void printPath(TreeNode *root, List<TreeNode> pathlist) {
+  if (root == NULL)
+    return;
+  pathlist.insert(root);
+  printPath(root -> left, pathlist);
+  printPath(root -> right, pathlist);
+  if (root -> left == NULL && root -> right == NULL)
+    printlist(pathlist);
+  pathlist.remove(root);
+}
+
+TreeNode leastcommonancestor(TreeNode *root, TreeNode *a, TreeNode *b) {
+  if (root == NULL)
+    return NULL;
+  if (root == a || root == b)
+    return root;
+  TreeNode *LeftLCA = leastcommonancestor(root -> left, a, b);
+  TreeNode *RightLCA = leastcommonancestor(root -> right, a, b);
+  if (LeftLCA != NULL && RightLCA != NULL)
+    return root;
+  if (LeftLCA != NULL)
+    return LeftLCA;
+  return RightLCA;
+}
+
+bool compareBST(TreeNode *a, TreeNode *b) {
+  if (a == NULL && b == NULL)
+    return true;
+  if (a != NULL && b != NULL) { //both not empty
+    return (a -> iInfo == b -> iInfo &&
+      compareBST(a -> left, b ->left) &&
+      compareBST(a -> right, b -> right));
+  }
+  return false;
+}
+
+int BSTheight(TreeNode *root) {
+  if (root == NULL)
+    return 0;
+  return (1 + max(BSTheight(root -> left), BSTheight(root -> right)));
+}
+
+bool isBalanced(TreeNode *root) {
+  int lh, rh;
+  if (root == NULL)
+    return true;
+  lh = BSTheight(root -> left);
+  rh = BSTheight(root -> right);
+  if (abs(lh - rh) <= 1 && isBalanced(root -> left) && isBalanced(root -> right))
+    return true;
+}
+
 
 int main () {
   BST myBST;
