@@ -113,4 +113,21 @@ class LinkedList {
           pN = pN -> next;
         } cout << endl;
       }
+
+      void Reverse() {
+        if (pHead == NULL || pHead -> next == NULL)
+          return pHead;
+
+        Node *curr = pHead -> next;
+        Node *prev = pHead;
+        prev -> next = NULL;
+
+        while (curr != NULL) {
+          Node *pNext = curr -> next;
+          curr -> next = prev;
+          prev = curr;
+          curr = pNext;
+        }
+        return prev;
+      }
 };
