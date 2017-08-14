@@ -29,6 +29,17 @@ Accessing the elements
   -at(g) – Returns a reference to the element at position ‘g’ in the vector
   -front() – Returns a reference to the first element in the vector
   -back() – Returns a reference to the last element in the vector
+
+Modifiers
+  assign() - Assign vector content (public member function )
+  push_back() - Add element at the end (public member function )
+  pop_back() - Delete last element (public member function )
+  insert() - Insert elements (public member function )
+  erase() - Erase elements (public member function )
+  swap() - Swap content (public member function )
+  clear() - Clear content (public member function )
+  emplace () - Construct and insert element (public member function )
+  emplace_back () - Construct and insert element at the end (public member function )
 */
 
 #include <iostream>
