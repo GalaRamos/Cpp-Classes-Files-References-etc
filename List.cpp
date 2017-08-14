@@ -29,6 +29,12 @@ Functions used with List :
   -size() – Returns the number of elements in the list
   -sort() – Sorts the list in increasing order
 
+
+Print list:
+  list<int>  mylist = {0, 1, 2, 3, 4};
+  for (const auto v : mylist)
+      std::cout << v << "\n";
+
 */
 
 #include <iostream>
